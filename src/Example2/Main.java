@@ -1,13 +1,19 @@
-package Example1;
+package Example2;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.OptionalDouble;
 
 public class Main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
         SecureRandom random = new SecureRandom();
-        OptionalDouble optDouble = random.ints(60000000, 1, 100).parallel()
+        long[] ints = random.longs(100000000, 1, 1001).toArray();
+        OptionalDouble optDouble = Arrays.stream(ints).parallel()
+                .map(x -> Math.round(Math.pow(x, 2) / 10))
+                .filter(x -> (x & 2) == 0)
+                .distinct()
+                .sorted()
                 .average();
         double average = optDouble.getAsDouble();
         System.out.println("Average: " + average);
