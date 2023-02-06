@@ -8,10 +8,10 @@ public class Main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
         SecureRandom random = new SecureRandom();
-        long[] ints = random.longs(100000000, 1, 1001).toArray();
+        int[] ints = random.ints(100000000, 1, 1001).toArray();
         OptionalDouble optDouble = Arrays.stream(ints).parallel()
-                .map(x -> Math.round(Math.pow(x, 2) / 10))
-                .filter(x -> (x & 2) == 0)
+                .map(x -> x * 10 - 3000)
+                .filter(x -> x > 4000)
                 .distinct()
                 .sorted()
                 .average();
