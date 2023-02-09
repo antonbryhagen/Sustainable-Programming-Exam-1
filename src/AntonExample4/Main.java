@@ -16,12 +16,12 @@ public class Main {
         int n = 2_000_000_000;
 
         Instant start = Instant.now();
-        long factorial = LongStream.rangeClosed( 1, n )
+        long result = LongStream.rangeClosed( 1, n )
                 .parallel()
                 .reduce(0, ( long a, long b ) -> a + b);
         Instant stop = Instant.now();
         Duration timToRun = Duration.between(start, stop);
-        System.out.println("Sum: "+factorial);
+        System.out.println("Sum: "+result);
         System.out.println("Time to run: "+timToRun.toMillis());
     }
 }
