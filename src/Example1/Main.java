@@ -1,22 +1,41 @@
 package Example1;
 
-import java.security.SecureRandom;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.OptionalDouble;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/*
+    This example shows the two ways to create a parallel streams by taking a list
+    of integers and getting the sum of them
+ */
 
 public class Main {
     public static void main(String[] args) {
-        Instant start = Instant.now();
-        SecureRandom random = new SecureRandom();
-        OptionalDouble optDouble = random.ints(5000000, 1, 100)
-                .parallel()
-                .average();
-        double average = optDouble.getAsDouble();
-        Instant stop = Instant.now();
-        Duration timeToRun = Duration.between(start, stop);
-        System.out.println("Time to run " + timeToRun.toMillis());
-        System.out.println("Average: " + average);
 
+        /*
+            Using parallelStream() method to create a parallel stream
+         */
+        ArrayList<Integer> listOfIntegers = new ArrayList<>();
+        listOfIntegers.add(1);
+        listOfIntegers.add(3);
+        listOfIntegers.add(5);
+        listOfIntegers.add(8);
+
+        int sumParallelStream = listOfIntegers.parallelStream()
+                .mapToInt(x -> x)
+                .sum();
+
+        System.out.printf("The sum of the integers in the ArrayList is %d \n", sumParallelStream);
+
+        /*
+            Using parallel() method to create a parallel stream from a normal stream
+         */
+
+        int[] arrayOfIntegers = {1, 3, 5, 8};
+
+        int sumParallel =  Arrays.stream(arrayOfIntegers)
+                .parallel()
+                .sum();
+
+        System.out.printf("The sum of the integers in the array is %d", sumParallel);
     }
 }

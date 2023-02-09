@@ -1,4 +1,4 @@
-package AntonExample4;
+package Example4;
 
 import java.time.Duration;
 import java.time.Instant;

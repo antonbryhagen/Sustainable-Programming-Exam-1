@@ -1,4 +1,4 @@
-package AntonExample2;
+package Example2;
 
 import java.util.Arrays;
 /*

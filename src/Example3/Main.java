@@ -1,27 +1,26 @@
 package Example3;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.stream.LongStream;
+import java.util.Arrays;
 
 /*
-    Example showing performance of parallel streams
-    1+2+3+4+...+n
-    Can test performance by removing parallel() and compare time
+    This example shows that using some operations in a parallel stream may produce unwanted results
+    since each thread gets the same instruction but different elements
  */
 
 public class Main {
     public static void main(String[] args) {
+        int[] numbers = {1, 3, 5};
 
-        int n = 2_000_000_000;
-
-        Instant start = Instant.now();
-        long result = LongStream.rangeClosed( 1, n )
+        int sum = Arrays.stream(numbers)
                 .parallel()
-                .reduce(0, ( long a, long b ) -> a + b);
-        Instant stop = Instant.now();
-        Duration timToRun = Duration.between(start, stop);
-        System.out.println("Sum: "+result);
-        System.out.println("Time to run: "+timToRun.toMillis());
+                .reduce(10, Integer::sum);
+
+        /*
+            Expected sum would be 1 + 3 + 5 + 10 = 19
+            But since the stream is parallel, the 10 in the reduce operation is added in each thread
+            working with that instruction
+         */
+
+        System.out.printf("The sum is %d", sum);
     }
 }
