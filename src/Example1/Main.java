@@ -10,7 +10,7 @@ public class Main {
         Instant start = Instant.now();
         SecureRandom random = new SecureRandom();
         OptionalDouble optDouble = random.ints(5000000, 1, 100)
-                //.parallel()
+                .parallel()
                 .average();
         double average = optDouble.getAsDouble();
         Instant stop = Instant.now();
